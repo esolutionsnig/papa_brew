@@ -1,6 +1,6 @@
 # papabrew
 
-A new Flutter project.
+This a coffee shop app built with flutter. This app is meant to allow registered members place an order for their coffee.
 
 ## Getting Started
 
