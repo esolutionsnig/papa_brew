@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:papabrew/models/brew.dart';
-import 'package:papabrew/shared/color.dart';
 
 class BrewTile extends StatelessWidget {
 

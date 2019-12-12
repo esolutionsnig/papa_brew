@@ -12,3 +12,4 @@ const cteal = Color(0xFF00bcd4);
 const cpink = Color(0xFFff1744);
 const cred = Colors.red;
 const clitegrey = Color(0xFFEEEEEE);
+const disabledColor = Color(0xFFefefef);

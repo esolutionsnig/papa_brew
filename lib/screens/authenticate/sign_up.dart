@@ -2,6 +2,7 @@ import 'package:papabrew/shared/color.dart';
 import 'package:papabrew/shared/constants.dart';
 import 'package:papabrew/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:papabrew/widgets/general.dart';
 
 import '../../services/auth.dart';
 
@@ -27,81 +28,268 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: cprimary,
-        elevation: 0.0,
-        title: Text('Sign Up'),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Sign In'),
-            onPressed: () {
-              widget.toggleView();
-            },
-          )
-        ],
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 20.0,),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email Address'),
-                validator: (val) => val.isEmpty ? 'Email is required' : null,
-                onChanged: (val) {
-                  setState(() => email = val);
-                },
-              ),
-              SizedBox(height: 20.0,),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                validator: (val) => val.length < 6 ? 'Password must be a minimum of 6 characters' : null,
-                obscureText: true,
-                onChanged: (val) {
-                  setState(() => password = val);
-                },
-              ),
-              SizedBox(height: 20.0,),
-              RaisedButton(
-                color: cprimary,
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(
-                    color: cwhite
+    return loading
+        ? Loading()
+        : LayoutBuilder(
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints:
+                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Material(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            ClipPath(
+                              clipper: MyClipper(),
+                              child: header("assets/papadrewheader.png"),
+                            ),
+                            title("SIGN UP"),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              child: Text(
+                                error,
+                                style: TextStyle(color: cred, fontSize: 14.0),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 15.0),
+                                    child: Icon(
+                                      Icons.email,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 30.0,
+                                    width: 1.0,
+                                    color: Colors.grey.withOpacity(0.5),
+                                    margin: const EdgeInsets.only(
+                                        left: 00.0, right: 10.0),
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: textInputDecoration.copyWith(
+                                          hintText: 'Email Address',
+                                          labelText: 'Email Address'),
+                                      validator: (val) => val.isEmpty
+                                          ? 'Email is required'
+                                          : null,
+                                      onChanged: (val) {
+                                        setState(() => email = val);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 15.0),
+                                    child: Icon(
+                                      Icons.vpn_key,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 30.0,
+                                    width: 1.0,
+                                    color: Colors.grey.withOpacity(0.5),
+                                    margin: const EdgeInsets.only(
+                                        left: 00.0, right: 10.0),
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      obscureText: true,
+                                      decoration: textInputDecoration.copyWith(
+                                          hintText: 'Password',
+                                          labelText: 'Password'),
+                                      validator: (val) => val.length < 6
+                                          ? 'Password must be a minimum of 6 characters'
+                                          : null,
+                                      onChanged: (val) {
+                                        setState(() => password = val);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 20.0),
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 20.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      splashColor: caccent,
+                                      color: cprimary,
+                                      disabledColor: disabledColor,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 20.0),
+                                            child: Text(
+                                              'CREATE MY ACCOUNT',
+                                              style: TextStyle(color: cwhite),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(),
+                                          ),
+                                          Transform.translate(
+                                            offset: Offset(15.0, 0.0),
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: FlatButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          28.0),
+                                                ),
+                                                splashColor: caccent,
+                                                color: cwhite,
+                                                child: Icon(Icons.person_add),
+                                                onPressed: () async {
+                                                  if (_formKey.currentState
+                                                      .validate()) {
+                                                    setState(
+                                                        () => loading = true);
+                                                    dynamic result = await _auth
+                                                        .signUpWithEmailAndPassword(
+                                                            email, password);
+                                                    if (result == null) {
+                                                      setState(() {
+                                                        error =
+                                                            'Sign up failed, please supply valid credential';
+                                                        loading = false;
+                                                      });
+                                                    }
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      onPressed: () async {
+                                        if (_formKey.currentState.validate()) {
+                                          setState(() => loading = true);
+                                          dynamic result = await _auth
+                                              .signUpWithEmailAndPassword(
+                                                  email, password);
+                                          if (result == null) {
+                                            setState(() {
+                                              error =
+                                                  'Authentication failed, please supply valid credential';
+                                              loading = false;
+                                            });
+                                          }
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 20.0),
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 20.0),
+                              child: new Row(
+                                children: <Widget>[
+                                  new Expanded(
+                                    child: FlatButton(
+                                      shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(30.0)),
+                                      color: Colors.transparent,
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 20.0),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Already have an account? SIGN IN HERE',
+                                          style: TextStyle(color: cprimary),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        widget.toggleView();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom)),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    setState(() {
-                      loading = true;
-                    });
-                    dynamic result =  await _auth.signUpWithEmailAndPassword(email, password);
-                    if (result == null) {
-                      setState(() {
-                         error = 'Sign Up, please supply valid data';
-                         loading = false;
-                      });
-                    }
-                  }
-                },
-              ),
-              SizedBox(height: 12.0,),
-              Text(
-                error,
-                style: TextStyle(
-                  color: cred,
-                  fontSize: 14.0
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+              );
+            },
+          );
+  }
+}
+
+class MyClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path p = Path();
+    p.lineTo(size.width, 0.0);
+    p.lineTo(size.width, size.height * 0.85);
+    p.arcToPoint(
+      Offset(0.0, size.height * 0.85),
+      radius: const Radius.elliptical(50.0, 10.0),
+      rotation: 0.0,
     );
+    p.lineTo(0.0, 0.0);
+    p.close();
+    return p;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper oldClipper) {
+    return true;
   }
 }

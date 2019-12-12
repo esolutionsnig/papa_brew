@@ -27,6 +27,7 @@ dependencies:
   cloud_firestore: ^0.12.9+4
   provider: ^3.2.0
   flutter_spinkit: ^4.1.0
+  flutter_form_builder: ^3.7.2
 
 dev_dependencies:
   flutter_test:
